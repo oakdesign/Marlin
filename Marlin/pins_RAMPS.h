@@ -376,19 +376,19 @@
 
     #if ENABLED(REPRAP_DISCOUNT_SMART_CONTROLLER)
 
-      #define BEEPER_PIN        37
+      #define BEEPER_PIN        31
 
       #if ENABLED(CR10_STOCKDISPLAY)
         #define BTN_EN1         17
         #define BTN_EN2         23
       #else
-        #define BTN_EN1         31
-        #define BTN_EN2         33
+        #define BTN_EN1         25
+        #define BTN_EN2         27
       #endif
 
-      #define BTN_ENC           35
+      #define BTN_ENC           29
       #define SD_DETECT_PIN     49
-      #define KILL_PIN          41
+      #define KILL_PIN          33
 
       #if ENABLED(BQ_LCD_SMART_CONTROLLER)
         #define LCD_BACKLIGHT_PIN 39
