@@ -37,7 +37,6 @@
  */
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
-#define CONFIGURATION_H_VERSION 010107
 #define CONFIGURATION_H_VERSION 010109
 
 //===========================================================================
