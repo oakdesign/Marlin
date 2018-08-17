@@ -46,7 +46,7 @@
 #include "../module/planner.h"
 #include "../module/stepper.h"
 #include "../Marlin.h"
-#include "../HAL/Delay.h"
+#include "../HAL/shared/Delay.h"
 
 uint8_t LEDs[8 * (MAX7219_NUMBER_UNITS)] = { 0 };
 
@@ -97,7 +97,9 @@ void Max7219(const uint8_t reg, const uint8_t data) {
   Max7219_PutByte(reg);          // specify register
   SIG_DELAY();
   Max7219_PutByte(data);         // put data
+  #ifndef CPU_32_BIT
     CRITICAL_SECTION_END;
+  #endif
 }
 
 #if ENABLED(MAX7219_NUMERIC)
@@ -241,9 +243,9 @@ void Max7219_Set_Column(const uint8_t col, const uint32_t val) {
   uint32_t mask = 0x0000001;
   for (uint8_t y = 0; y < MAX7219_Y_LEDS; y++) {
     if (val & mask)
-      SET_PIXEL_7219(col, MAX7219_Y_LEDS-1-y);
+      SET_PIXEL_7219(col, MAX7219_Y_LEDS - y - 1);
     else
-      CLEAR_PIXEL_7219(col, MAX7219_Y_LEDS-1-y);
+      CLEAR_PIXEL_7219(col, MAX7219_Y_LEDS - y - 1);
     mask <<= 1;
   }
   #if _ROT == 90 || _ROT == 270

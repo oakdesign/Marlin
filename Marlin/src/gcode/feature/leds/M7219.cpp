@@ -42,8 +42,10 @@
  *               rows or columns depending upon rotation)
  */
 void GcodeSuite::M7219() {
-  if (parser.seen('I'))
+  if (parser.seen('I')) {
     Max7219_Clear();
+    Max7219_register_setup();
+  }
 
   if (parser.seen('F'))
     for (uint8_t x = 0; x < MAX7219_X_LEDS; x++)
@@ -69,12 +71,18 @@ void GcodeSuite::M7219() {
   }
 
   if (parser.seen('P')) {
-    for (uint8_t x = 0; x < COUNT(LEDs); x++) {
+    for (int8_t x = 0; x < 8 * MAX7219_NUMBER_UNITS; x++) {
       SERIAL_ECHOPAIR("LEDs[", x);
-      SERIAL_ECHOPAIR("]=", LEDs[x]);
-      SERIAL_EOL();
+    SERIAL_ECHO("]=");
+    for (int8_t j = 7; j >= 0; j--) {
+      if ( LEDs[x] & (0x01<<j) )
+        SERIAL_ECHO("1");
+      else
+        SERIAL_ECHO("0");
     }
+    SERIAL_EOL();
     return;
+    }
   }
 }
 
